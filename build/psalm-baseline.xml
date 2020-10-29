@@ -3534,6 +3534,11 @@
       <code>int</code>
     </InvalidReturnType>
   </file>
+  <file src="lib/private/DB/AdapterMySQL.php">
+    <InternalMethod occurrences="1">
+      <code>getParams</code>
+    </InternalMethod>
+  </file>
   <file src="lib/private/DB/AdapterPgSql.php">
     <FalsableReturnStatement occurrences="1">
       <code>$this-&gt;conn-&gt;fetchColumn('SELECT lastval()')</code>
@@ -3543,6 +3548,9 @@
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>string</code>
     </ImplementedReturnTypeMismatch>
+    <InternalMethod occurrences="1">
+      <code>getParams</code>
+    </InternalMethod>
     <InvalidReturnStatement occurrences="2">
       <code>$insertQb-&gt;execute()</code>
       <code>$this-&gt;adapter-&gt;lastInsertId($seqName)</code>
@@ -3554,6 +3562,9 @@
     <InvalidScalarArgument occurrences="1">
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
+    <LessSpecificImplementedReturnType occurrences="2">
+      <code>Doctrine\DBAL\Driver\Statement</code>
+    </LessSpecificImplementedReturnType>
     <ParamNameMismatch occurrences="1">
       <code>$statement</code>
     </ParamNameMismatch>
@@ -3631,6 +3642,11 @@
       <code>$y</code>
     </InvalidScalarArgument>
   </file>
+  <file src="lib/private/DB/QueryBuilder/ExpressionBuilder/MySqlExpressionBuilder.php">
+    <InternalMethod occurrences="1">
+      <code>getParams</code>
+    </InternalMethod>
+  </file>
   <file src="lib/private/DB/QueryBuilder/ExpressionBuilder/OCIExpressionBuilder.php">
     <InvalidReturnStatement occurrences="1">
       <code>parent::castColumn($column, $type)</code>
@@ -3657,6 +3673,11 @@
     <NullableReturnStatement occurrences="1">
       <code>$string</code>
     </NullableReturnStatement>
+  </file>
+  <file src="lib/private/DB/ReconnectWrapper.php">
+    <InternalMethod occurrences="1">
+      <code>__construct</code>
+    </InternalMethod>
   </file>
   <file src="lib/private/DateTimeFormatter.php">
     <FalsableReturnStatement occurrences="1"/>
