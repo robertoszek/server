@@ -217,18 +217,46 @@ export const initCore = () => {
 
 		$('#app-content').prepend('<div id="app-navigation-toggle" class="icon-menu" style="display:none" tabindex="0"></div>')
 
-		const toggleSnapperOnButton = () => {
-			if (snapper.state().state === 'left') {
-				snapper.close()
-			} else {
-				snapper.open('left')
+		let animating = false
+		snapper.on('animating', () => {
+			// we need this because the trigger button
+			// is also implicitly wired to close by snapper
+			animating = true
+		})
+		snapper.on('animated', () => {
+			animating = false
+		})
+
+		// These are necessary because calling open or close
+		// on snapper during an animation makes it trigger an
+		// unfinishable animation, which itself will continue
+		// triggering animating events and cause high CPU load
+		// Ref https://github.com/jakiestfu/Snap.js/issues/216
+		const snapperOpen = () => {
+			if (animating || snapper.state().state !== 'closed') {
+				return
 			}
+			snapper.open('left')
 		}
 
-		$('#app-navigation-toggle').click(toggleSnapperOnButton)
+		const snapperClose = () => {
+			if (animating || snapper.state().state === 'closed') {
+				return
+			}
+			snapper.close()
+		}
+
+		$('#app-navigation-toggle').click(() => {
+			// close is implicit in the button by snap.js
+			if (snapper.state().state !== 'left') {
+				snapperOpen()
+			}
+		})
 		$('#app-navigation-toggle').keypress(e => {
-			if (e.which === 13) {
-				toggleSnapperOnButton()
+			if (snapper.state().state === 'left') {
+				snapperClose()
+			} else {
+				snapperOpen()
 			}
 		})
 
@@ -253,7 +281,7 @@ export const initCore = () => {
 				|| $target.closest('#app-settings').length) {
 				return
 			}
-			snapper.close()
+			snapperClose()
 		})
 
 		let navigationBarSlideGestureEnabled = false
@@ -285,7 +313,7 @@ export const initCore = () => {
 
 		const toggleSnapperOnSize = () => {
 			if ($(window).width() > breakpointMobileWidth) {
-				snapper.close()
+				snapperClose()
 				snapper.disable()
 
 				navigationBarSlideGestureEnabled = false
